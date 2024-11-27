@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #f9f9f9;
+      }
+      h2 {
+        color: #007bff;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        background: #f1f1f1;
+        margin: 8px 0;
+        padding: 8px;
+        border-radius: 4px;
+      }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 12px;
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Nhắc nhở: Bạn có task chưa hoàn thành!</h2>
+      <p>Xin chào {{username}},</p>
+      <p>Bạn có các task chưa hoàn thành:</p>
+      <ul>
+        {{taskList}}
+      </ul>
+      <p>Hãy hoàn thành chúng sớm nhất có thể!</p>
+      <footer>
+        Trân trọng,<br />
+        Hệ thống quản lý task
+      </footer>
+    </div>
+  </body>
+</html>

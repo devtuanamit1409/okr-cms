@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tasks",
+  "info": {
+    "singularName": "task",
+    "pluralName": "tasks",
+    "displayName": "Task",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "content-tags": {
+      "fieldName": "Tags",
+      "tags": {
+        "None": {
+          "color": "neutral"
+        },
+        "Done": {
+          "color": "success"
+        },
+        "In progress": {
+          "color": "primary"
+        },
+        "Pendding": {
+          "color": "danger"
+        }
+      },
+      "defaultTag": "None"
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "Tags": {
+      "type": "customField",
+      "customField": "plugin::content-tags.content-tags"
+    },
+    "repeat": {
+      "type": "boolean",
+      "default": false
+    },
+    "progess": {
+      "type": "integer",
+      "max": 100
+    },
+    "completion_time": {
+      "type": "datetime"
+    },
+    "idUser": {
+      "type": "integer"
+    }
+  }
+}

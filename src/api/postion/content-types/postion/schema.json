@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "postions",
+  "info": {
+    "singularName": "postion",
+    "pluralName": "postions",
+    "displayName": "Postion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "isAdmin": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
