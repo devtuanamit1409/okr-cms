@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 module.exports = {
   /**
    * Triggered before creating a task.
@@ -9,7 +11,7 @@ module.exports = {
     // Nếu trường progess không được cung cấp, đặt mặc định là 0
     if (data.progess === undefined) {
       data.progess = 0;
-      data.Tags = "In progress";
+      data.Tags = "None";
     }
   },
 
@@ -40,15 +42,69 @@ module.exports = {
   },
 
   async beforeUpdate(event) {
-    const { data } = event.params;
+    const { data, where } = event.params;
 
-    // Nếu progress đạt 100%, tự động cập nhật Tags và completion_time
+    // Nếu progress đạt 100%, tự động cập nhật Tags, completion_time và timeDone
     if (data.progess === 100) {
       data.Tags = "Done"; // Gán trạng thái thành "Done"
       data.completion_time = new Date(); // Gán completion_time là thời điểm hiện tại
+
+      // Lấy thông tin task hiện tại
+      const taskId = where.id; // Lấy ID của task đang được cập nhật
+      const taskDetails = await strapi.db.query("api::task.task").findOne({
+        where: { id: taskId },
+      });
+
+      if (taskDetails && taskDetails.startAt) {
+        // Tính số giờ và phút thực tế làm (completion_time - start_time)
+        const startTime = new Date(taskDetails.startAt);
+        const completionTime = data.completion_time;
+        const diffInMilliseconds =
+          completionTime.getTime() - startTime.getTime();
+
+        const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60)); // Lấy phần giờ
+        const diffInMinutes = Math.floor(
+          (diffInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+        ); // Lấy phần phút
+
+        // Định dạng thời gian thực tế làm
+        let timeDoneFormatted = `${diffInHours} giờ`;
+        if (diffInMinutes > 0) {
+          timeDoneFormatted += ` ${diffInMinutes} phút`; // Thêm phần phút nếu có
+        }
+
+        // Lưu giá trị vào trường timeDone (dạng string)
+        data.timeDone = timeDoneFormatted;
+      }
+
+      // Lấy tất cả user có role `isAdmin = true`
+      const adminUsers = await strapi.db
+        .query("plugin::users-permissions.user")
+        .findMany({
+          where: { postion: { isAdmin: true } },
+        });
+
+      // Gửi email bất đồng bộ nếu có admin
+      if (adminUsers.length > 0) {
+        const emailAddresses = adminUsers.map((user) => user.email); // Lấy danh sách email
+
+        // Dùng setImmediate để không chặn quy trình chính
+        setImmediate(async () => {
+          await strapi.plugins["email"].services.email.send({
+            to: emailAddresses, // Gửi đến danh sách email
+            subject: "Thông báo: Task đã hoàn thành",
+            html: `<p>Task đã được đánh dấu là "Done".</p>
+                 <p><strong>Tên task:</strong> ${taskDetails.name}</p>
+                 <p><strong>Thời gian thực tế làm:</strong> ${data.timeDone}</p>
+                 <p>Vui lòng kiểm tra hệ thống để biết thêm chi tiết.</p>`,
+            text: `Task ${taskDetails.name} đã hoàn thành. Thời gian thực tế làm: ${data.timeDone}`,
+          });
+        });
+      }
     } else {
       data.Tags = "In progress";
       data.completion_time = null;
+      data.timeDone = null; // Reset giá trị nếu chưa hoàn thành
     }
   },
 };

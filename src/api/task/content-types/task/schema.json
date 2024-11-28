@@ -65,6 +65,12 @@
     },
     "hours": {
       "type": "integer"
+    },
+    "startAt": {
+      "type": "datetime"
+    },
+    "timeDone": {
+      "type": "string"
     }
   }
 }
