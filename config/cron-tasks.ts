@@ -1,5 +1,5 @@
 import { Strapi } from "@strapi/strapi";
-import dayjs from "dayjs";
+
 import fs from "fs";
 import path from "path";
 
