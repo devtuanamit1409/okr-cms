@@ -55,6 +55,16 @@
     },
     "idUser": {
       "type": "integer"
+    },
+    "isImportant": {
+      "type": "boolean",
+      "default": false
+    },
+    "deadline": {
+      "type": "datetime"
+    },
+    "hours": {
+      "type": "integer"
     }
   }
 }

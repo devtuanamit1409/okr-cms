@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout mã nguồn
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Thiết lập SSH để kết nối tới server
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # 3. Thêm server vào known_hosts
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 89.117.36.180 >> ~/.ssh/known_hosts
+
+      # 4. Deploy code lên server
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@89.117.36.180 << 'EOF'
+            # Thêm đường dẫn npm và pm2 vào PATH
+            export PATH=$PATH:/root/.nvm/versions/node/v18.20.5/bin
+
+            # Kiểm tra npm và pm2
+            which npm
+            which pm2
+
+            # Chuyển đến thư mục dự án
+            cd /root/okr-cms
+
+            # Pull code mới nhất từ GitHub
+            git pull origin main
+
+            # Cài đặt dependencies
+            npm install
+
+            # Build lại dự án
+            npm run build
+
+            # Restart ứng dụng bằng pm2
+            pm2 restart 0
+          EOF
