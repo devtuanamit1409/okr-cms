@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_share_goals",
+  "info": {
+    "displayName": "Goal",
+    "icon": "alien",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "progess": {
+      "type": "integer"
+    },
+    "period": {
+      "type": "string"
+    }
+  }
+}

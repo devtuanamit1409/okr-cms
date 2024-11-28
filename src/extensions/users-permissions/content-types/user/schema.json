@@ -80,6 +80,31 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::task.task"
+    },
+    "goalYear": {
+      "type": "component",
+      "repeatable": true,
+      "component": "share.goal"
+    },
+    "goalPrecious": {
+      "type": "component",
+      "repeatable": true,
+      "component": "share.goal"
+    },
+    "goalMonth": {
+      "type": "component",
+      "repeatable": true,
+      "component": "share.goal"
+    },
+    "goalWeek": {
+      "type": "component",
+      "repeatable": true,
+      "component": "share.goal"
+    },
+    "goalDaily": {
+      "type": "component",
+      "repeatable": true,
+      "component": "share.goal"
     }
   }
 }

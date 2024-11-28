@@ -15,4 +15,11 @@ declare module "@strapi/strapi" {
       idUser: number;
     }>;
   }
+  export interface User {
+    goalDaily?: {
+      name: string;
+      createdAt?: string;
+      completed?: boolean;
+    }[];
+  }
 }

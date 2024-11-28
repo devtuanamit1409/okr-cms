@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_share_daily_goals",
+  "info": {
+    "displayName": "Daily Goal",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "text"
+    }
+  }
+}
