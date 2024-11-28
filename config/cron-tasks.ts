@@ -4,10 +4,6 @@ import fs from "fs";
 import path from "path";
 
 export default {
-  /**
-   * Cron job để kiểm tra và tạo task mới cho user với repeat = true.
-   * Chạy hàng ngày lúc 00:00.
-   */
   repeatTaskCreation: {
     task: async ({ strapi }: { strapi: Strapi }) => {
       const today = new Date();
