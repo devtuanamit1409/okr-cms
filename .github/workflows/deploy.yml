@@ -44,7 +44,7 @@ jobs:
             git pull origin main
 
             # Cài đặt dependencies
-            npm install
+            npm install --force
 
             # Build lại dự án
             npm run build
