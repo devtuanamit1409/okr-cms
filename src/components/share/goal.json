@@ -21,6 +21,10 @@
     },
     "period": {
       "type": "string"
+    },
+    "repeat": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
