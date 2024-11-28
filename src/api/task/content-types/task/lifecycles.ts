@@ -1,5 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 module.exports = {
   /**
    * Triggered before creating a task.
@@ -47,8 +50,7 @@ module.exports = {
     // Nếu progress đạt 100%, tự động cập nhật Tags, completion_time và timeDone
     if (data.progess === 100) {
       data.Tags = "Done"; // Gán trạng thái thành "Done"
-      data.completion_time = new Date(); // Gán completion_time là thời điểm hiện tại
-
+      data.completion_time = dayjs().utc().toDate();
       // Lấy thông tin task hiện tại
       const taskId = where.id; // Lấy ID của task đang được cập nhật
       const taskDetails = await strapi.db.query("api::task.task").findOne({
