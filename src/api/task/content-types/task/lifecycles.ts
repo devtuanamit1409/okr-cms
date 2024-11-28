@@ -56,24 +56,19 @@ module.exports = {
       });
 
       if (taskDetails && taskDetails.startAt) {
-        // Tính số giờ và phút thực tế làm (completion_time - start_time)
+        // Tính số giờ và phút thực tế làm
         const startTime = new Date(taskDetails.startAt);
         const completionTime = data.completion_time;
         const diffInMilliseconds =
           completionTime.getTime() - startTime.getTime();
 
-        const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60)); // Lấy phần giờ
-        const diffInMinutes = Math.floor(
-          (diffInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-        ); // Lấy phần phút
+        // Quy đổi ra số giờ dạng thập phân
+        const diffInHoursDecimal = diffInMilliseconds / (1000 * 60 * 60); // 1 giờ = 1000ms * 60 * 60
 
-        // Định dạng thời gian thực tế làm
-        let timeDoneFormatted = `${diffInHours} giờ`;
-        if (diffInMinutes > 0) {
-          timeDoneFormatted += ` ${diffInMinutes} phút`; // Thêm phần phút nếu có
-        }
+        // Làm tròn tới 2 chữ số thập phân
+        const timeDoneFormatted = diffInHoursDecimal.toFixed(2) + " giờ";
 
-        // Lưu giá trị vào trường timeDone (dạng string)
+        // Lưu giá trị vào trường timeDone
         data.timeDone = timeDoneFormatted;
       }
 
