@@ -11,10 +11,20 @@ module.exports = {
   async beforeCreate(event) {
     const { data } = event.params;
 
-    // Nếu trường progess không được cung cấp, đặt mặc định là 0
+    // Nếu trường progess không được cung cấp, đặt mặc định là 0 và Tags là "None"
     if (data.progess === undefined) {
       data.progess = 0;
       data.Tags = "None";
+    }
+
+    // Nếu trường hours tồn tại, chuyển đổi từ chuỗi sang số và tính toán
+    if (data.hours !== undefined) {
+      const hoursInMinutes = parseFloat(data.hours); // Chuyển đổi chuỗi sang số
+      if (!isNaN(hoursInMinutes)) {
+        data.hours = hoursInMinutes / 60; // Chuyển đổi phút sang giờ
+      } else {
+        data.hours = 0; // Nếu không hợp lệ, đặt mặc định là 0
+      }
     }
   },
 

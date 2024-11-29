@@ -64,7 +64,7 @@
       "type": "datetime"
     },
     "hours": {
-      "type": "integer"
+      "type": "decimal"
     },
     "startAt": {
       "type": "datetime"
