@@ -71,6 +71,24 @@
     },
     "timeDone": {
       "type": "string"
+    },
+    "priorityLevel": {
+      "type": "enumeration",
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "goal": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    },
+    "prove": {
+      "type": "string"
     }
   }
 }
